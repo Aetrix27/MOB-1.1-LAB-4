@@ -19,6 +19,7 @@ Create a variable instance of `User` and call it your name. Use the memberwise i
 */
 
 var me = User(name : "David", age : 21, height : 6, weight : 130, activityLevel: 8)
+print("User name is \(me.name), age is \(me.age) height is \(me.height) weight is \(me.weight) and activity level is \(me.activityLevel)")
 
 
 /*:
