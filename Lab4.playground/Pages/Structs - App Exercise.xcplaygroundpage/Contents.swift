@@ -27,27 +27,34 @@ Distance can be represented using a variety of units of measurement. Create a `D
 - Example: If you use the initializer for meters and pass in a distance of 1600, the initializer should set `meters` to 1600 and `feet` to 5249.344.
 */
 
-struct Distance {
-    var feet: Double
-    init(fromMeters meters: Double) {
-        feet = meters * 0.32804
+struct Distance{
+    var meters : Float
+    var feet : Float
+    var miles : Float
+    var inches : Float
+    
+    init(meters : Float){
+        self.meters = meters
+        self.feet = self.meters * 3.28084
+        self.miles = self.feet / 5280.0
+        self.inches = self.feet * 12
     }
-
 }
 
 /*:
 Now create an instance of `Distance` called `mile`. Use the initializer for meters to set the distance to 1600. Print out the property for feet and verify that it is equal to 5249.344.
 */
 
-let mile = Distance(fromMeters: 1600)
-print(mile.feet)
+var distance = Distance(meters: 1000.00)
+print(distance)
 
 /*:
 Now create another instance of `Distance` and give it some other distance. Ensure that both properties are set correctly.
 */
 
-let mile2 = Distance(fromMeters: 1800)
-print(mile2.feet)
+var distance2 = Distance(meters: 30.00)
+print(distance)
+
 
 /*:
 ## Mile Times and Congratulations
@@ -57,18 +64,16 @@ The `RunningWorkout` struct below holds information about your users' running wo
 Create an instance of `RunningWorkout` and print the `averageMileTime` property. Check that it works properly.
 */
 struct RunningWorkout {
-    var distance: Double
-    var time: Double
-    var elevation: Double
+    var distance : Double
+    var time : Double
     var averageMileTime : Double{
-        return distance/time
-        
+        var mile : Double = distance * 1600
+        return mile / time
     }
-
 }
 
-var work1 = RunningWorkout(distance: 14, time: 5, elevation: 5)
-print(work1.averageMileTime)
+var myWorkout = RunningWorkout(distance : 1600, time : 420)
+print(myWorkout.averageMileTime)
 
 /*:
 In other app exercises, you've provided encouraging messages to the user based on how many steps they've completed. A great place to check whether or not you should display something to the user is in a property observer.
@@ -79,8 +84,8 @@ In the `Steps` struct below, add a `willSet` to the `steps` property that will c
 struct Steps {
     var steps: Int{
         willSet {
-            if(steps == goal){
-                updateUI(msg: "Congratulations!")
+            if(newValue == goal){
+                print("Congratulations!")
             
             }
         }
@@ -94,9 +99,6 @@ struct Steps {
    }
 }
 
-func updateUI(msg: String) {
-    print(msg)
-}
 
 var mySteps = Steps(steps: 9999, goal : 10000)
 mySteps.takeStep()
